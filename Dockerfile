@@ -16,6 +16,17 @@ COPY --from=build-env /App/out .
 COPY --from=build-env /App/entrypoint.sh entrypoint.sh
 RUN chmod +x entrypoint.sh
 
+# Add globalization and timezone to alpine: https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
+ENV \
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
+
+RUN apk add --no-cache \
+    icu-data-full \
+    icu-libs \
+    tzdata
+
 # Add packages so we can run as a specific PUID and GUID
 RUN apk add --no-cache su-exec shadow
 
