@@ -1,0 +1,10 @@
+services:
+    app:
+        container_name: dotnet-unraid-template
+        volumes:
+            - /mnt/user/appdata/dotnet-unraid-template:/appdata
+        ports:
+            - "5512:8080"
+        build:
+            context: .
+        network_mode: "bridge"
